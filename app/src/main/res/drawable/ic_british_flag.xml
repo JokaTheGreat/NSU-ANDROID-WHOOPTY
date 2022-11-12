@@ -1,0 +1,45 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="21dp"
+    android:viewportWidth="32"
+    android:viewportHeight="21">
+    <group>
+        <clip-path android:pathData="M0,0h32v21h-32z" />
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M0,0H32V21H0V0Z" />
+        <path
+            android:fillColor="#D80027"
+            android:pathData="M18,-0H14V8.531H0V12.469H14V21H18V12.469H32V8.531H18V-0Z" />
+        <path
+            android:fillColor="#0052B4"
+            android:pathData="M24.612,14.152L32,18.192V14.152H24.612ZM19.478,14.152L32,21V19.063L23.019,14.152H19.478ZM28.665,21L19.478,15.976V21H28.665Z" />
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M19.478,14.152L32,21V19.063L23.019,14.152H19.478Z" />
+        <path
+            android:fillColor="#D80027"
+            android:pathData="M19.478,14.152L32,21V19.063L23.019,14.152H19.478Z" />
+        <path
+            android:fillColor="#0052B4"
+            android:pathData="M5.646,14.152L0,17.24V14.152H5.646ZM12.522,15.023V21H1.593L12.522,15.023Z" />
+        <path
+            android:fillColor="#D80027"
+            android:pathData="M8.981,14.152L0,19.063V21L12.522,14.152H8.981Z" />
+        <path
+            android:fillColor="#0052B4"
+            android:pathData="M7.388,6.848L0,2.807V6.848H7.388ZM12.522,6.848L0,-0V1.936L8.981,6.848H12.522ZM3.335,-0L12.522,5.024V-0H3.335Z" />
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M12.522,6.848L0,-0V1.936L8.981,6.848H12.522Z" />
+        <path
+            android:fillColor="#D80027"
+            android:pathData="M12.522,6.848L0,-0V1.936L8.981,6.848H12.522Z" />
+        <path
+            android:fillColor="#0052B4"
+            android:pathData="M26.354,6.848L32,3.76V6.848H26.354ZM19.478,5.977V-0H30.407L19.478,5.977Z" />
+        <path
+            android:fillColor="#D80027"
+            android:pathData="M23.019,6.848L32,1.936V-0L19.478,6.848H23.019Z" />
+    </group>
+</vector>
