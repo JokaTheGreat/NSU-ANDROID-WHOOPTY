@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#252020">
+    android:background="@color/light_black">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
@@ -22,6 +22,6 @@
         app:ci_margin="7dp"
         app:ci_drawable="@drawable/tabs_indicator"
         app:ci_drawable_unselected="@drawable/tabs_indicator_unselected"
-        android:background="#252020" />
+        android:background="@color/light_black" />
 
 </LinearLayout>
