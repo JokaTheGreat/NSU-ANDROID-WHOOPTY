@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="60dp"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif"
         android:gravity="bottom"
         android:shadowColor="@color/black"
         android:shadowDx="1.5"

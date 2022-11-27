@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="110dp"
-    android:background="@color/light_black"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginVertical="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/beef_ingredient" />
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="160dp"
+    android:layout_height="240dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:background="@drawable/black_gradient"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:text="Beef"
-            android:textColor="@color/grey"
-            android:textSize="30sp" />
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:elevation="50dp"
+            android:src="@drawable/beef_ingredient" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:text="Beef"
+            android:textColor="@color/grey"
+            android:textSize="32sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
             android:text="1kg"
             android:textColor="@color/red"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

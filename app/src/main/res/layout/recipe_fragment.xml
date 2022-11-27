@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif"
         android:text="1."
         android:textColor="@color/red"
         android:textSize="20sp" />
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="30dp"
-        android:fontFamily="casual"
+        android:fontFamily="sans-serif"
         android:text="Fry until browned on each side, then remove and set aside. Repeat with the remaining oil and beef."
         android:textColor="@color/grey"
         android:textSize="20sp" />
