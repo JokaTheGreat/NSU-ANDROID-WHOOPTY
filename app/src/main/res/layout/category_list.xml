@@ -7,16 +7,16 @@
     android:orientation="vertical">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/category_list_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
     <me.relex.circleindicator.CircleIndicator3
-        android:id="@+id/view_pager_indicator"
+        android:id="@+id/category_list_tabs"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="20dp"
         app:ci_drawable="@drawable/tabs_indicator"
         app:ci_drawable_unselected="@drawable/tabs_indicator_unselected"
         app:ci_height="7dp"
