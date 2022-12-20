@@ -13,8 +13,8 @@ import java.net.URL
 import kotlinx.serialization.json.Json
 
 class CategoryListActivity : AppCompatActivity() {
-    private var titlesList = mutableListOf<String>()
-    private var descriptionsList = mutableListOf<String>()
+    private var titleList = mutableListOf<String>()
+    private var descriptionList = mutableListOf<String>()
     private var imageUrlList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,17 +29,17 @@ class CategoryListActivity : AppCompatActivity() {
         }.start()
 
         val viewPager = findViewById<ViewPager2>(R.id.category_list_view_pager)
-        viewPager.adapter = CategoryListAdapter(titlesList, descriptionsList, imageUrlList, this)
+        viewPager.adapter = CategoryListAdapter(titleList, descriptionList, imageUrlList, this)
     }
 
     private fun addToList(title: String, description: String, image: String) {
-        titlesList.add(title)
-        descriptionsList.add(description)
+        titleList.add(title)
+        descriptionList.add(description)
         imageUrlList.add(image)
     }
 
-    private fun postToList(data: Array<Category>) {
-        data.forEach {
+    private fun postToList(categories: Array<Category>) {
+        categories.forEach {
             addToList(
                 it.strCategory,
                 StringFormater.formatDescription(it.strCategoryDescription),
