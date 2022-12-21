@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/meal_card_title"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/meal_card_title_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/beef_meal" />
 
     <TextView
+        android:id="@+id/meal_card_title_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="60dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/nunito_bold"
         android:gravity="bottom"
         android:shadowColor="@color/black"
         android:shadowDx="1.5"
         android:shadowDy="1.3"
         android:shadowRadius="1.6"
-        android:text="Beef and Mustard Pie"
         android:textColor="@color/grey"
         android:textSize="50sp" />
 

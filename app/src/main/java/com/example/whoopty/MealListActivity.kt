@@ -26,13 +26,13 @@ class MealListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.meal_list)
 
+        categoryTitle = intent.getStringExtra("categoryTitle")
+
         Thread {
             val meals = getMeals()
             postToList(meals)
             updateUI()
         }.start()
-
-        categoryTitle = intent.getStringExtra("categoryTitle")
 
         val titleView = findViewById<TextView>(R.id.meal_list_title)
         titleView.text = "$categoryTitle meals"

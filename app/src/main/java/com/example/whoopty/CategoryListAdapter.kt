@@ -58,7 +58,7 @@ class CategoryListAdapter(
             Glide.with(activityContext)
                 .load(imageUrlList[position])
                 .into(holder.itemImage)
-        }
+        } //TODO: может стоит грузить картинки до попадания в адаптер?
     }
 
     inner class ClickListener(private val categoryTitle: String) : View.OnClickListener {

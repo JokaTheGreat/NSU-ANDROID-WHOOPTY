@@ -15,5 +15,17 @@ class StringFormater {
 
             return description.substring(0, MAX_DESCR_LENGTH) + "..."
         }
+
+        fun splitByNewStringSymbol(str: String): List<String> {
+            return str.split("[\r\n]+".toRegex())
+        }
+
+        fun getYoutubeVideoCode(youtubeLink: String): String {
+            if (youtubeLink.contains("youtu.be")) {
+                return youtubeLink.substring(youtubeLink.lastIndexOf("/") + 1)
+            }
+
+            return youtubeLink.substring(youtubeLink.indexOf("=") + 1)
+        }
     }
 }

@@ -36,6 +36,9 @@ class MealListAdapter(
     }
 
     override fun onBindViewHolder(holder: MealItemViewHolder, position: Int) {
+
+        holder.item.setOnClickListener(ClickListener(idList[position]))
+
         holder.itemTitle.text = titleList[position]
 
         Glide.with(activityContext)

@@ -39,6 +39,16 @@
             android:theme="@style/Theme.Whoopty.NoActionBar">
 
         </activity>
+        <activity
+            android:name=".MealCardActivity"
+            android:theme="@style/Theme.Whoopty.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".YoutubeActivity"
+            android:theme="@style/Theme.Whoopty.NoActionBar">
+
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
