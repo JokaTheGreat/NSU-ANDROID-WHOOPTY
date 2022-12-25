@@ -17,7 +17,7 @@ import java.net.URL
 
 class MealCardActivity : AppCompatActivity() {
     private var mealId: Int? = null
-    private var fragmentsList = mutableListOf<Fragment>()
+    private var meal = mutableListOf<Meal>()
     private var ingredientList = mutableListOf<String>()
     private var measureList = mutableListOf<String>()
 
@@ -28,9 +28,8 @@ class MealCardActivity : AppCompatActivity() {
         mealId = intent.getIntExtra("mealId", -1)
 
         Thread {
-            val meal = getMealDetails()
-            postToList(meal)
-            setFragmentsToList(meal)
+            meal.addAll(getMealDetails())
+            postToList()
             updateUI()
         }.start()
 
@@ -38,10 +37,10 @@ class MealCardActivity : AppCompatActivity() {
         backToListView.setOnClickListener { onBackPressed() }
 
         val viewPager = findViewById<ViewPager2>(R.id.meal_card_view_pager)
-        viewPager.adapter = MealCardAdapter(fragmentsList, this)
+        viewPager.adapter = MealCardAdapter(meal, ingredientList, measureList, this)
     }
 
-    private fun getMealDetails(): Meal {
+    private fun getMealDetails(): Array<Meal> {
         val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
 
         val json = with(url.openConnection() as HttpURLConnection) {
@@ -52,7 +51,7 @@ class MealCardActivity : AppCompatActivity() {
             }
         }
 
-        return Json { ignoreUnknownKeys = true }.decodeFromString<MealList>(json.get()).meals[0]
+        return Json { ignoreUnknownKeys = true }.decodeFromString<MealList>(json.get()).meals
     }
 
     private fun addToListWithCondition(ingredient: String?, measure: String?) {
@@ -63,50 +62,27 @@ class MealCardActivity : AppCompatActivity() {
     }
 
     //TODO: помолиться x2.
-    private fun postToList(meal: Meal) {
-        addToListWithCondition(meal.strIngredient1, meal.strMeasure1)
-        addToListWithCondition(meal.strIngredient2, meal.strMeasure2)
-        addToListWithCondition(meal.strIngredient3, meal.strMeasure3)
-        addToListWithCondition(meal.strIngredient4, meal.strMeasure4)
-        addToListWithCondition(meal.strIngredient5, meal.strMeasure5)
-        addToListWithCondition(meal.strIngredient6, meal.strMeasure6)
-        addToListWithCondition(meal.strIngredient7, meal.strMeasure7)
-        addToListWithCondition(meal.strIngredient8, meal.strMeasure8)
-        addToListWithCondition(meal.strIngredient9, meal.strMeasure9)
-        addToListWithCondition(meal.strIngredient10, meal.strMeasure10)
-        addToListWithCondition(meal.strIngredient11, meal.strMeasure11)
-        addToListWithCondition(meal.strIngredient12, meal.strMeasure12)
-        addToListWithCondition(meal.strIngredient13, meal.strMeasure13)
-        addToListWithCondition(meal.strIngredient14, meal.strMeasure14)
-        addToListWithCondition(meal.strIngredient15, meal.strMeasure15)
-        addToListWithCondition(meal.strIngredient16, meal.strMeasure16)
-        addToListWithCondition(meal.strIngredient17, meal.strMeasure17)
-        addToListWithCondition(meal.strIngredient18, meal.strMeasure18)
-        addToListWithCondition(meal.strIngredient19, meal.strMeasure19)
-        addToListWithCondition(meal.strIngredient20, meal.strMeasure20)
-    }
-
-    //TODO: MUST HAVE TODOS: про библиотеку для запросов, обработать ошибку, создавать фрагменты в viewpager adaptere
-
-    private fun setFragmentsToList(meal: Meal) {
-        val titleFragment = MealCardTitleFragment(meal.strMeal, meal.strMealThumb)
-        val ingredientsFragment = MealCardIngredientsFragment(
-            ingredientList, measureList, this
-        )
-        val recipeFragment = MealCardRecipeFragment(
-            StringFormatter.splitByNewStringSymbol(meal.strInstructions!!), this
-        )
-
-        fragmentsList.add(titleFragment)
-        fragmentsList.add(ingredientsFragment)
-        fragmentsList.add(recipeFragment)
-
-        println(meal.strYoutube)
-
-        if (meal.strYoutube != null && meal.strYoutube != "") {
-            val linksFragment = MealCardLinksFragment(meal.strYoutube, this)
-            fragmentsList.add(linksFragment)
-        }
+    private fun postToList() {
+        addToListWithCondition(meal[0].strIngredient1, meal[0].strMeasure1)
+        addToListWithCondition(meal[0].strIngredient2, meal[0].strMeasure2)
+        addToListWithCondition(meal[0].strIngredient3, meal[0].strMeasure3)
+        addToListWithCondition(meal[0].strIngredient4, meal[0].strMeasure4)
+        addToListWithCondition(meal[0].strIngredient5, meal[0].strMeasure5)
+        addToListWithCondition(meal[0].strIngredient6, meal[0].strMeasure6)
+        addToListWithCondition(meal[0].strIngredient7, meal[0].strMeasure7)
+        addToListWithCondition(meal[0].strIngredient8, meal[0].strMeasure8)
+        addToListWithCondition(meal[0].strIngredient9, meal[0].strMeasure9)
+        addToListWithCondition(meal[0].strIngredient10, meal[0].strMeasure10)
+        addToListWithCondition(meal[0].strIngredient11, meal[0].strMeasure11)
+        addToListWithCondition(meal[0].strIngredient12, meal[0].strMeasure12)
+        addToListWithCondition(meal[0].strIngredient13, meal[0].strMeasure13)
+        addToListWithCondition(meal[0].strIngredient14, meal[0].strMeasure14)
+        addToListWithCondition(meal[0].strIngredient15, meal[0].strMeasure15)
+        addToListWithCondition(meal[0].strIngredient16, meal[0].strMeasure16)
+        addToListWithCondition(meal[0].strIngredient17, meal[0].strMeasure17)
+        addToListWithCondition(meal[0].strIngredient18, meal[0].strMeasure18)
+        addToListWithCondition(meal[0].strIngredient19, meal[0].strMeasure19)
+        addToListWithCondition(meal[0].strIngredient20, meal[0].strMeasure20)
     }
 
     private fun updateUI() {
