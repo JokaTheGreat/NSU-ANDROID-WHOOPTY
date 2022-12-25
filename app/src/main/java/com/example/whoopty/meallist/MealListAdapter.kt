@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.meallist
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentContainerView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.whoopty.mealcard.MealCardActivity
+import com.example.whoopty.R
 
 class MealListAdapter(
     private var idList: List<Int>,

@@ -1,11 +1,12 @@
-package com.example.whoopty
+package com.example.whoopty.mealcard
 
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.whoopty.utils.StringFormater
+import com.example.whoopty.R
+import com.example.whoopty.utils.StringFormatter
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -44,7 +45,7 @@ class YoutubeActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListen
         youTubePlayer?.setPlaybackEventListener(playbackEventListener)
 
         if (!wasRestored) {
-            youTubePlayer?.cueVideo(StringFormater.getYoutubeVideoCode(youtubeLink!!))
+            youTubePlayer?.cueVideo(StringFormatter.getYoutubeVideoCode(youtubeLink!!))
         }
     }
 

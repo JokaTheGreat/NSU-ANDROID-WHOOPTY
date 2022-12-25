@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.mealcard
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

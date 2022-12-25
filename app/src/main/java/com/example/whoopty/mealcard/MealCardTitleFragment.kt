@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.mealcard
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.whoopty.R
 
 class MealCardTitleFragment(private val title: String, private val imageUrl: String) : Fragment() {
     override fun onCreateView(

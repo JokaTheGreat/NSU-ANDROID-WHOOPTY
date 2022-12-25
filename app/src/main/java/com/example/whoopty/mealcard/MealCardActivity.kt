@@ -1,13 +1,14 @@
-package com.example.whoopty
+package com.example.whoopty.mealcard
 
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.whoopty.R
 import com.example.whoopty.models.Meal
 import com.example.whoopty.models.MealList
-import com.example.whoopty.utils.StringFormater
+import com.example.whoopty.utils.StringFormatter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.relex.circleindicator.CircleIndicator3
@@ -85,13 +86,15 @@ class MealCardActivity : AppCompatActivity() {
         addToListWithCondition(meal.strIngredient20, meal.strMeasure20)
     }
 
+    //TODO: MUST HAVE TODOS: про библиотеку для запросов, обработать ошибку, создавать фрагменты в viewpager adaptere
+
     private fun setFragmentsToList(meal: Meal) {
         val titleFragment = MealCardTitleFragment(meal.strMeal, meal.strMealThumb)
         val ingredientsFragment = MealCardIngredientsFragment(
             ingredientList, measureList, this
         )
         val recipeFragment = MealCardRecipeFragment(
-            StringFormater.splitByNewStringSymbol(meal.strInstructions!!), this
+            StringFormatter.splitByNewStringSymbol(meal.strInstructions!!), this
         )
 
         fragmentsList.add(titleFragment)

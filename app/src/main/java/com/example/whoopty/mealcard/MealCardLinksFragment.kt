@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.mealcard
 
 import android.content.Context
 import android.content.Intent
@@ -10,8 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
+import com.example.whoopty.R
 import com.example.whoopty.utils.ShaderFactory
-import com.example.whoopty.utils.StringFormater
+import com.example.whoopty.utils.StringFormatter
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubeThumbnailLoader
 import com.google.android.youtube.player.YouTubeThumbnailView
@@ -38,7 +39,7 @@ class MealCardLinksFragment(private val youtubeLink: String, private val activit
     }
 
     override fun onInitializationSuccess(p0: YouTubeThumbnailView?, p1: YouTubeThumbnailLoader?) {
-        p1?.setVideo(StringFormater.getYoutubeVideoCode(youtubeLink))
+        p1?.setVideo(StringFormatter.getYoutubeVideoCode(youtubeLink))
     }
 
     override fun onInitializationFailure(

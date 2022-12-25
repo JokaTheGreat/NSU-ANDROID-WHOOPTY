@@ -1,6 +1,6 @@
 package com.example.whoopty.utils
 
-class StringFormater {
+class StringFormatter {
     companion object {
         private const val MAX_DESCR_LENGTH = 520
 

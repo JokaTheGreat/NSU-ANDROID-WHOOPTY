@@ -1,11 +1,12 @@
-package com.example.whoopty
+package com.example.whoopty.categorylist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.example.whoopty.R
 import com.example.whoopty.models.Category
 import com.example.whoopty.models.CategoryList
-import com.example.whoopty.utils.StringFormater
+import com.example.whoopty.utils.StringFormatter
 import kotlinx.serialization.decodeFromString
 import me.relex.circleindicator.CircleIndicator3
 import java.net.HttpURLConnection
@@ -21,6 +22,7 @@ class CategoryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.category_list)
 
+        //TODO: okhttp(retrofit) для запросов
         //TODO: делает запросы на каждом рекрейте активити, нормально??
         Thread {
             val categories = getCategoryList()
@@ -42,7 +44,7 @@ class CategoryListActivity : AppCompatActivity() {
         categories.forEach {
             addToList(
                 it.strCategory,
-                StringFormater.formatDescription(it.strCategoryDescription),
+                StringFormatter.formatDescription(it.strCategoryDescription),
                 it.strCategoryThumb
             )
         }
@@ -60,6 +62,7 @@ class CategoryListActivity : AppCompatActivity() {
 
     private fun getCategoryList(): Array<Category> {
         val url = URL("https://www.themealdb.com/api/json/v1/1/categories.php")
+        //TODO: обработать ошибку, когда активити онПауз тред приглушать
 
         val json = with(url.openConnection() as HttpURLConnection) {
             requestMethod = "GET"

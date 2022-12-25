@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.categorylist
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.whoopty.meallist.MealListActivity
+import com.example.whoopty.R
 import com.example.whoopty.utils.ShaderFactory
 
 class CategoryListAdapter(

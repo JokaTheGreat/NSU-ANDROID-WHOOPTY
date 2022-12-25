@@ -1,4 +1,4 @@
-package com.example.whoopty
+package com.example.whoopty.meallist
 
 import android.os.Bundle
 import android.widget.ImageView
@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.whoopty.R
 import com.example.whoopty.models.Meal
 import com.example.whoopty.models.MealList
 import com.example.whoopty.utils.ShaderFactory
