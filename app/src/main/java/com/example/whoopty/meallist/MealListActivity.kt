@@ -3,6 +3,7 @@ package com.example.whoopty.meallist
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +13,8 @@ import com.example.whoopty.models.MealList
 import com.example.whoopty.utils.ShaderFactory
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.*
+import java.io.IOException
 
 class MealListActivity : AppCompatActivity() {
     private var categoryTitle: String? = null
@@ -29,11 +30,7 @@ class MealListActivity : AppCompatActivity() {
 
         categoryTitle = intent.getStringExtra("categoryTitle")
 
-        Thread {
-            val meals = getMeals()
-            postToList(meals)
-            updateUI()
-        }.start()
+        workWithApi()
 
         val titleView = findViewById<TextView>(R.id.meal_list_title)
         titleView.text = "$categoryTitle meals"
@@ -44,22 +41,36 @@ class MealListActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.meal_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MealListAdapter(idList, titleList, imageUrlList, ingredientTitleList, this)
+        recyclerView.adapter =
+            MealListAdapter(idList, titleList, imageUrlList, ingredientTitleList, this)
     }
 
-    private fun getMeals(): Array<Meal> { //TODO: унифицировать запросы?
-        val url = URL("https://www.themealdb.com/api/json/v1/1/filter.php?c=$categoryTitle")
+    private fun workWithApi() {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://www.themealdb.com/api/json/v1/1/filter.php?c=$categoryTitle")
+            .build()
 
-        val json = with(url.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"
-
-            inputStream.bufferedReader().use {
-                it.lines().reduce { acc, string -> acc + string }
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                showToast("Some troubles with internet connection \nPlease restart app")
+                throw e
             }
-        }
 
-        return Json.decodeFromString<MealList>(json.get()).meals
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    showToast("Something troubles with server \nPlease restart app")
+                    throw IOException("bad response $response")
+                }
+
+                val meals = getMeals(response.body!!.string())
+                postToList(meals)
+                updateUI()
+            }
+        })
     }
+
+    private fun getMeals(json: String): Array<Meal> = Json.decodeFromString<MealList>(json).meals
 
     private fun addToList(id: Int, title: String, image: String, ingredientTitle: String) {
         idList.add(id)
@@ -71,6 +82,12 @@ class MealListActivity : AppCompatActivity() {
     private fun postToList(meals: Array<Meal>) {
         meals.forEach {
             addToList(it.idMeal, it.strMeal, it.strMealThumb, categoryTitle!!)
+        }
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
 

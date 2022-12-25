@@ -2,18 +2,17 @@ package com.example.whoopty.mealcard
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.whoopty.R
 import com.example.whoopty.models.Meal
 import com.example.whoopty.models.MealList
-import com.example.whoopty.utils.StringFormatter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.relex.circleindicator.CircleIndicator3
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.*
+import java.io.IOException
 
 class MealCardActivity : AppCompatActivity() {
     private var mealId: Int? = null
@@ -27,11 +26,7 @@ class MealCardActivity : AppCompatActivity() {
 
         mealId = intent.getIntExtra("mealId", -1)
 
-        Thread {
-            meal.addAll(getMealDetails())
-            postToList()
-            updateUI()
-        }.start()
+        workWithApi()
 
         val backToListView = findViewById<ImageView>(R.id.meal_card_back_to_meals)
         backToListView.setOnClickListener { onBackPressed() }
@@ -40,19 +35,34 @@ class MealCardActivity : AppCompatActivity() {
         viewPager.adapter = MealCardAdapter(meal, ingredientList, measureList, this)
     }
 
-    private fun getMealDetails(): Array<Meal> {
-        val url = URL("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
+    private fun workWithApi() {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://www.themealdb.com/api/json/v1/1/lookup.php?i=$mealId")
+            .build()
 
-        val json = with(url.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"
-
-            inputStream.bufferedReader().use {
-                it.lines().reduce { acc, string -> acc + string }
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                showToast("Some troubles with internet connection \nPlease restart app")
+                throw e
             }
-        }
 
-        return Json { ignoreUnknownKeys = true }.decodeFromString<MealList>(json.get()).meals
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    showToast("Something troubles with server \nPlease restart app")
+                    throw IOException("bad response $response")
+                }
+
+                meal.addAll(getMealDetails(response.body!!.string()))
+                postToList()
+                updateUI()
+            }
+        })
     }
+
+    private fun getMealDetails(json: String): Array<Meal> =
+        Json { ignoreUnknownKeys = true }.decodeFromString<MealList>(json).meals
+
 
     private fun addToListWithCondition(ingredient: String?, measure: String?) {
         if (ingredient != null && ingredient != "" && measure != null && measure != "") {
@@ -83,6 +93,12 @@ class MealCardActivity : AppCompatActivity() {
         addToListWithCondition(meal[0].strIngredient18, meal[0].strMeasure18)
         addToListWithCondition(meal[0].strIngredient19, meal[0].strMeasure19)
         addToListWithCondition(meal[0].strIngredient20, meal[0].strMeasure20)
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun updateUI() {

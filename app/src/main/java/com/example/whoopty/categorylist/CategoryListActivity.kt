@@ -1,6 +1,7 @@
 package com.example.whoopty.categorylist
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.whoopty.R
@@ -9,9 +10,9 @@ import com.example.whoopty.models.CategoryList
 import com.example.whoopty.utils.StringFormatter
 import kotlinx.serialization.decodeFromString
 import me.relex.circleindicator.CircleIndicator3
-import java.net.HttpURLConnection
-import java.net.URL
 import kotlinx.serialization.json.Json
+import okhttp3.*
+import java.io.IOException
 
 class CategoryListActivity : AppCompatActivity() {
     private var titleList = mutableListOf<String>()
@@ -22,16 +23,35 @@ class CategoryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.category_list)
 
-        //TODO: okhttp(retrofit) для запросов
-        //TODO: делает запросы на каждом рекрейте активити, нормально??
-        Thread {
-            val categories = getCategoryList()
-            postToList(categories)
-            updateUI()
-        }.start()
+        workWithApi()
 
         val viewPager = findViewById<ViewPager2>(R.id.category_list_view_pager)
         viewPager.adapter = CategoryListAdapter(titleList, descriptionList, imageUrlList, this)
+    }
+
+    private fun workWithApi() {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://www.themealdb.com/api/json/v1/1/categories.php")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                showToast("Some troubles with internet connection \nPlease restart app")
+                throw e
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    showToast("Something troubles with server \nPlease restart app")
+                    throw IOException("bad response $response")
+                }
+
+                val categories = getCategoryList(response.body!!.string())
+                postToList(categories)
+                updateUI()
+            }
+        })
     }
 
     private fun addToList(title: String, description: String, image: String) {
@@ -50,6 +70,12 @@ class CategoryListActivity : AppCompatActivity() {
         }
     }
 
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun updateUI() {
         runOnUiThread {
             val viewPager = findViewById<ViewPager2>(R.id.category_list_view_pager)
@@ -60,50 +86,6 @@ class CategoryListActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCategoryList(): Array<Category> {
-        val url = URL("https://www.themealdb.com/api/json/v1/1/categories.php")
-        //TODO: обработать ошибку, когда активити онПауз тред приглушать
-
-        val json = with(url.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"
-
-            inputStream.bufferedReader().use {
-                it.lines().reduce { acc, string -> acc + string }
-            }
-        }
-
-        return Json.decodeFromString<CategoryList>(json.get()).categories
-    }
+    private fun getCategoryList(json: String): Array<Category> =
+        Json.decodeFromString<CategoryList>(json).categories
 }
-
-/*
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.youtube.player.*
-*/
-/*
-class MyYoutubeListener : YouTubeThumbnailView.OnInitializedListener {
-    override fun onInitializationSuccess(p0: YouTubeThumbnailView?, p1: YouTubeThumbnailLoader?) {
-        p1?.setVideo("nMyBC9staMU")
-    }
-
-    override fun onInitializationFailure(
-        p0: YouTubeThumbnailView?,
-        p1: YouTubeInitializationResult?
-    ) {
-        println(p0)
-        println(p1)
-        println("failed initialization youtubeeee")
-    }
-
-}
-
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.meal_card_links_item)
-
-        findViewById<YouTubeThumbnailView>(R.id.youtube_thumbnail).initialize(DeveloperKey().DEVELOPER_KEY, MyYoutubeListener())
-    }
-}
-*/
